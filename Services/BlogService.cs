@@ -4,8 +4,8 @@ namespace Blog_WebApp.Services
 {
     public class BlogService:IBlogService
     {
-        private readonly IRepository<Blog> _blogRepository;
-        public  BlogService(IRepository<Blog> repository)
+        private readonly IBlogRepository _blogRepository;
+        public  BlogService(IBlogRepository repository)
         {
             _blogRepository = repository;
         }
@@ -25,9 +25,9 @@ namespace Blog_WebApp.Services
             return await _blogRepository.GetAllAsync();
         }
 
-        public Task<Blog> GetBlogByIdAsync(int id)
+        public async Task<Blog> GetBlogByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _blogRepository.GetByIdAsync(id);
         }
 
         public Task UpdateBlogAsync(Blog blog)

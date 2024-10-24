@@ -19,7 +19,7 @@ builder.Services.AddDbContext<BlogWebContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddScoped<IRepository<Blog>,Repository<Blog>>();
+builder.Services.AddScoped<IBlogRepository,BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 
 
