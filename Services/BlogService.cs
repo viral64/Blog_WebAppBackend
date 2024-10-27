@@ -1,4 +1,5 @@
 ﻿using Blog_WebApp.Models;
+using System.Runtime.InteropServices;
 
 namespace Blog_WebApp.Services
 {
@@ -10,14 +11,14 @@ namespace Blog_WebApp.Services
             _blogRepository = repository;
         }
 
-        public Task AddBlogAsync(Blog blog)
+        public async Task AddBlogAsync(Blog blog)
         {
-            throw new NotImplementedException();
+             await _blogRepository.AddAsync(blog);
         }
 
-        public Task DeleteBlogByIdAsync(int id)
+        public async Task DeleteBlogByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            await _blogRepository.DeleteAsync(id);
         }
 
         public async Task<IEnumerable<Blog>> GetAllBlogAsync()
@@ -30,9 +31,9 @@ namespace Blog_WebApp.Services
             return await _blogRepository.GetByIdAsync(id);
         }
 
-        public Task UpdateBlogAsync(Blog blog)
+        public async Task UpdateBlogAsync(Blog blog)
         {
-            throw new NotImplementedException();
+            await _blogRepository.UpdateAsync(blog);
         }
     }
 }
