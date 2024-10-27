@@ -54,6 +54,7 @@ namespace Blog_WebApp.Controllers
             {
                 return BadRequest();
             }
+
             await _blogService.UpdateBlogAsync(blog);
             return NoContent();
         }
