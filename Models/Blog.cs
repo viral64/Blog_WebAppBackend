@@ -17,7 +17,7 @@ public partial class Blog
 
     public DateTime? UpdatedAt { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public bool IsDeleted { get; set; }
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
