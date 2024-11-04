@@ -1,4 +1,5 @@
-﻿using Blog_WebApp.Models;
+﻿using Blog_WebApp.DisplayModel;
+using Blog_WebApp.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -34,5 +35,15 @@ public class UserService : IUserService
     public async Task DeleteUserAsync(int id)
     {
         await _userRepository.DeleteAsync(id);
+    }
+    public async Task<IEnumerable<GetUserDetailsDto>> GetUserDetails(int id)
+    {
+        return await _userRepository.GetUserDetails(id);
+    }
+
+    public async Task<User> Login(User user)
+    {
+        var authenticatedUser = await _userRepository.LoginAsync(user);
+        return authenticatedUser;
     }
 }

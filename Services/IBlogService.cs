@@ -1,4 +1,5 @@
-﻿using Blog_WebApp.Models;
+﻿using Blog_WebApp.DisplayModel;
+using Blog_WebApp.Models;
 
 namespace Blog_WebApp.Services
 {
@@ -9,5 +10,6 @@ namespace Blog_WebApp.Services
         Task AddBlogAsync(Blog blog);    
         Task UpdateBlogAsync(Blog blog);
         Task DeleteBlogByIdAsync(int id);
+        Task<IEnumerable<BlogDto>> GetAllBlog();
     }
 }

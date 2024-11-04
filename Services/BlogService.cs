@@ -1,4 +1,5 @@
-﻿using Blog_WebApp.Models;
+﻿using Blog_WebApp.DisplayModel;
+using Blog_WebApp.Models;
 using System.Runtime.InteropServices;
 
 namespace Blog_WebApp.Services
@@ -34,6 +35,10 @@ namespace Blog_WebApp.Services
         public async Task UpdateBlogAsync(Blog blog)
         {
             await _blogRepository.UpdateAsync(blog);
+        }
+        public async Task<IEnumerable<BlogDto>> GetAllBlog()
+        {               
+            return await _blogRepository.GetAllBlog(); ;
         }
     }
 }

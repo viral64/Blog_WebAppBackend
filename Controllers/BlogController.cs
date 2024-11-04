@@ -4,6 +4,7 @@ using Nest;
 using Blog_WebApp.Models;
 using Elastic.Clients.Elasticsearch;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
 namespace Blog_WebApp.Controllers
 {
     [ApiController]
@@ -16,11 +17,10 @@ namespace Blog_WebApp.Controllers
         {
             _blogService = blogService;
         }
-
         [HttpGet]
         public async Task<IActionResult> GetAllBlog()
         {
-            var blogs = await _blogService.GetAllBlogAsync();
+            var blogs = await _blogService.GetAllBlog();
             return Ok(blogs);
         }
 

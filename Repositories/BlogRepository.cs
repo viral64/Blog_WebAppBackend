@@ -1,4 +1,5 @@
-﻿using Blog_WebApp.Models;
+﻿using Blog_WebApp.DisplayModel;
+using Blog_WebApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class BlogRepository : Repository<Blog>, IBlogRepository
@@ -9,18 +10,21 @@ public class BlogRepository : Repository<Blog>, IBlogRepository
         _blogWebContext = context;
     }
 
-    public async Task<IEnumerable<Blog>> GetAllBlog()
+    public async Task<IEnumerable<BlogDto>> GetAllBlog()
     {
-        var blog = _blogWebContext.Blogs.ToList();
-        List<Blog> result = new List<Blog>();
-        for(int i = 0; i < blog.Count; i++)
+        IEnumerable<BlogDto> blogs;
+        try
         {
-            if (!blog[i].IsDeleted)
-            {
-
-            }
+            List<Blog> data = new List<Blog>();
+            blogs = await _blogWebContext.Database
+            .SqlQueryRaw<BlogDto>("EXEC getAllBlog")
+            .ToListAsync();
         }
-        return blog;
+        catch (Exception ex) {
+            throw new Exception();
+        }
+
+        return blogs;
     }
 
 }
