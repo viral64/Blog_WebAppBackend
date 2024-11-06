@@ -1,5 +1,6 @@
 ﻿using Blog_WebApp.DisplayModel;
 using Blog_WebApp.Models;
+using Blog_WebApp.Repositories.StoredProcedureDto;
 using Microsoft.EntityFrameworkCore;
 
 public class UserRepository : Repository<User>, IUserRepository
@@ -19,25 +20,31 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public async Task<IEnumerable<GetUserDetailsDto>> GetUserDetails(int id)
     {
-        IEnumerable<GetUserDetailsDto> userDetails;
+        IEnumerable<GetUserDetailsIntermediateDto> intermediateUserDetails;
         try
         {
-            userDetails = await _blogWebContext.Database
-                .SqlQueryRaw<GetUserDetailsDto>("EXEC GetUserDetails @userid={0}", id)
+            intermediateUserDetails = await _blogWebContext.Database
+                .SqlQueryRaw<GetUserDetailsIntermediateDto>("EXEC GetUserDetails @userid={0}", id)
                 .ToListAsync();
-            foreach (var detail in userDetails)
+
+            // Map to GetUserDetailsDto and set DisplayTime
+            var userDetails = intermediateUserDetails.Select(detail => new GetUserDetailsDto
             {
-                detail.DisplayTime = detail.hours_since_created > 24
+                user_id = detail.user_id,
+                username = detail.username,
+                profile_picture = detail.profile_picture,
+                title = detail.title,
+                content = detail.content,
+                DisplayTime = detail.hours_since_created > 24
                     ? $"{detail.hours_since_created / 24} days ago"
-                    : $"{detail.hours_since_created}h ago";
-            }
+                    : $"{detail.hours_since_created}h ago"
+            }).ToList();
+
+            return userDetails;
         }
         catch (Exception ex)
         {
             throw new Exception("An error occurred while retrieving user details.", ex);
         }
-       
-
-        return userDetails;
     }
 }
